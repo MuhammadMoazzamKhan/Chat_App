@@ -13,7 +13,43 @@
 </head>
 
 <body>
-    <main>
+    
+        <div class="signin-Container">
+            <div class="formContainer">
+            <div class="formWrapper">
+                <span class="logo">MK talk</span>
+                <span class="rigister">Sign In</span>
+                <form>
+                    <input type="email" placeholder="Email" id="emailSign">
+                    <input type="password" placeholder="Password" id="passwordSign">
+                    <button class="button" id="btnSign" >Sign In</button>
+                </form>
+                <p id="labelP">Don't you have an account? <span id="Register-btn">Register</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-container notActive">
+        <div class="formContainer">
+            <div class="formWrapper">
+                <span class="logo">MK talk</span>
+                <span class="rigister">Register</span>
+                <form>
+                    <input type="text" placeholder="Display name..." id="name">
+                    <input type="email" placeholder="Email" id="emailLog" >
+                    <input type="password" placeholder="Password" id="passwordLog">
+                    <input type="file" id="file" style="display: none;">
+                    <label for="file" id="file">
+                        <img src="gallery-logo.png" alt="" width="40px"  id="labelIcon">
+                        <span  id="labelText">Add an Avatar</span>
+                    </label>
+                    <button class="button" id="btnLog" >Sign Up</button>
+                </form>
+                <p id="labelP">Do you have an account? <span id="login-btn">Login</span></p>
+            </div>
+        </div>
+    </div>
+    <main class="notActive">
         <header>
             <div class="tittle">
                 <img src="Logo.webp" alt="" width="35px">
@@ -58,7 +94,8 @@
         </div>
 
     </main>
-    <script src="index.js"></script>
+    <script src="index.js" type="module"></script>
+    <script src="firebase.js" type="module"></script>
 </body>
 
 </html>
