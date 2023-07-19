@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="tittle">
+                <img src="Logo.webp" alt="" width="35px">
+                <h1>MK Talk</h1>
+            </div>
+            <button id="btn">
+                <img src="sidebar.png" alt="" width="50px">
+            </button>
+        </header>
+        <div class="container">
+            <div class="user-window">
+                <div class="user-head">
+                    <h3>People</h3>
+                    <h4>3</h4>
+                </div>
+                <div class="user-list">
+                    <p>john</p>
+                    <p>Sara</p>
+                    <p>elia</p>
+                </div>
+            </div>
+            <div class="chat-window">
+                <div class="chats">
+                    <div class="user-join">
+                        <p><b>John</b> joined the chat</p>
+                    </div>
+                    <div class="message incoming">
+                        <h5>John</h5>
+                        <p>Hello alltron</p>
+                    </div>
+                    <div class="message outgoing">
+                        <h5>Veronica</h5>
+                        <p>Welcome john</p>
+                    </div>
+                </div>
+                <div class="user-input">
+                    <input type="text" placeholder="Type your message...">
+                    <span><i class="fas fa-link"></i></span>
+                    <button>Send</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="index.js"></script>
+</body>
+
+</html>
