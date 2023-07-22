@@ -10,7 +10,9 @@ btn.addEventListener("click", ()=>{
 })
 
 let signinContainer = document.querySelector(".signin-Container");
-let logincontainer = document.querySelector(".login-container");
+let logincontainer = document.querySelector(".signup-container");
+
+export {signinContainer,logincontainer}
 
 RegisterBtn.addEventListener("click",()=>{
     logincontainer.classList.remove("notActive");
@@ -23,16 +25,4 @@ loginBtn.addEventListener("click" , ()=>{
     signinContainer.classList.remove("notActive");
     logincontainer.classList.add("notActive");
 })
-
-
-const emailSign = document.getElementById("emailSign");
-const passwordSign = document.getElementById("passwordSign");
-const nameSign = document.getElementById("nameSign");
-const btnSign = document.getElementById("btnSign");
-console.log(emailSign)
-const name = document.getElementById("name");
-
-const emailLog = document.getElementById("emailLog");
-const passwordLog = document.getElementById("passwordLog");
-const btnLog = document.getElementById("btnLog");
 
