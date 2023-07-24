@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,sendEmailVerification,onAuthStateChanged ,deleteUser,signOut   } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { getFirestore, doc, setDoc ,getDoc, collection, query, where, getDocs,addDoc , serverTimestamp  ,updateDoc ,onSnapshot,orderBy,increment  } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import {  getStorage, ref, uploadBytesResumable, getDownloadURL  } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -17,7 +17,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
+const user = auth.currentUser;
 const db = getFirestore(app);
 const storage = getStorage();
-console.log(auth)
-export { app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword,sendEmailVerification ,db, doc, setDoc, storage, ref,uploadBytesResumable, getDownloadURL }
+
+export { app, auth, createUserWithEmailAndPassword, user,signInWithEmailAndPassword,sendEmailVerification,onAuthStateChanged,deleteUser,signOut     ,db, doc, setDoc,updateDoc ,getDoc , collection, query, where, serverTimestamp ,onSnapshot , getDocs ,addDoc ,orderBy,increment, storage, ref,uploadBytesResumable, getDownloadURL }

@@ -21,7 +21,8 @@
             <div class="formWrapper">
                 <span class="logo">MK talk</span>
                 <span class="rigister">Sign In</span>
-                <span class="rigister text-success" style="display: none;" id="verify-message">Firstly verify your email.</span>
+                <span class="rigister text-success" style="display: none;" id="verify-message">Firstly verify your
+                    email.</span>
                 <form>
                     <input type="email" placeholder="Email" id="emailLog">
                     <input type="password" placeholder="Password" id="passwordLog" autoComplete="on">
@@ -32,7 +33,7 @@
         </div>
     </div>
 
-    <div class="signup-container ">
+    <div class="signup-container">
         <div class="formContainer">
             <div class="formWrapper">
                 <span class="logo">MK talk</span>
@@ -57,42 +58,40 @@
         <header>
             <div class="tittle">
                 <img src="Logo.webp" alt="" width="45px">
-                <h1>MK Talk</h1>
+                <h1 class="mt-2">MK Talk</h1>
             </div>
+            <button type="button" class="btn btn-secondary" id="logout-btn">Log out</button>
             <button id="btn">
                 <img src="sidebar.png" alt="" width="50px">
             </button>
         </header>
         <div class="container">
             <div class="user-window">
+                <div class="d-flex align-item-center mb-2">
+                    <img src="profilepic.png" width="45px" alt="" class="ms-2" id="profile-pic">
+                    <h5 class=" d-flex ms-1 mt-3" id="profile-name">unknown</h5>
+                </div>
                 <div class="user-head">
                     <h3>People</h3>
-                    <h4>3</h4>
+                    <h4 id="howMuchUser"></h4>
                 </div>
-                <div class="user-list">
-                    <p>john</p>
-                    <p>Sara</p>
-                    <p>elia</p>
+                <div class="user-list" id="user-list">
+
                 </div>
             </div>
             <div class="chat-window">
                 <div class="chats">
-                    <div class="user-join">
-                        <p><b>John</b> joined the chat</p>
+                    <div class="user-join" id="user-join">
+                        <p><img src="profilepic.png" width="40px" alt=""><b>john</b> joined the chat</p>
                     </div>
-                    <div class="message incoming">
-                        <h5>John</h5>
-                        <p>Hello alltron</p>
-                    </div>
-                    <div class="message outgoing">
-                        <h5>Veronica</h5>
-                        <p>Welcome john</p>
+                    <div id="chat-box">
+                        
                     </div>
                 </div>
                 <div class="user-input">
-                    <input type="text" placeholder="Type your message...">
+                    <input type="text" placeholder="Type your message..." id="message-input">
                     <span><i class="fas fa-link"></i></span>
-                    <button>Send</button>
+                    <button id="message-send-btn" type="button">Send</button>
                 </div>
             </div>
         </div>
@@ -101,8 +100,13 @@
     <script type="module" src="index.js"></script>
     <script type="module" src="firebase.js"></script>
     <script type="module" src="register.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.19/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
