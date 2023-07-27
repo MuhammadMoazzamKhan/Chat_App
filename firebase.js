@@ -21,4 +21,4 @@ const user = auth.currentUser;
 const db = getFirestore(app);
 const storage = getStorage();
 
-export { app, auth, createUserWithEmailAndPassword, user,signInWithEmailAndPassword,sendEmailVerification,onAuthStateChanged,deleteUser,signOut     ,db, doc, setDoc,updateDoc ,getDoc , collection, query, where, serverTimestamp ,onSnapshot , getDocs ,addDoc ,orderBy,increment, storage, ref,uploadBytesResumable, getDownloadURL }
+export { app, auth, createUserWithEmailAndPassword, user,signInWithEmailAndPassword,sendEmailVerification,onAuthStateChanged,deleteUser,signOut     ,db, doc, setDoc ,getDoc , collection, query, where, serverTimestamp ,onSnapshot , getDocs ,addDoc ,orderBy,increment,updateDoc, storage, ref,uploadBytesResumable, getDownloadURL }

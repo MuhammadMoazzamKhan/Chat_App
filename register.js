@@ -22,9 +22,8 @@ const err = document.getElementById("err");
 const file = document.getElementById("file");
 const messageInlog = document.getElementById("verify-message");
 
-import { app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signOut, db, doc, setDoc, getDoc, addDoc, serverTimestamp, onSnapshot, orderBy,increment, storage, ref, updateDoc, uploadBytesResumable, collection, query, where, getDocs, getDownloadURL, user } from "./firebase.js"
+import { app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signOut, db, doc, setDoc, getDoc, addDoc, serverTimestamp, onSnapshot, orderBy, increment, storage, ref, updateDoc, uploadBytesResumable, collection, query, where, getDocs, getDownloadURL, user } from "./firebase.js"
 import { signinContainer, logincontainer } from "./index.js"
-
 
 
 
@@ -58,7 +57,6 @@ const uploadfile = (file) => {
     })
 }
 
-
 btnSign.addEventListener("click", async () => {
     btnSign.innerHTML = `<div class="spinner-border text-light"
     role="status">
@@ -67,23 +65,23 @@ btnSign.addEventListener("click", async () => {
     createUserWithEmailAndPassword(auth, emailSign.value, passwordSign.value)
         .then(async (userCredential) => {
             try {
-
+                console.log(emailSign.value)
+                console.log(passwordSign.value)
+                console.log(name.value)
                 const user = userCredential.user;
                 main.classList.add("notActive");
                 await setDoc(doc(db, "users", user.uid), {
                     fullName: name.value,
                     email: emailSign.value,
                     password: passwordSign.value,
-                    file: file.files[0].name
+                    file: file.files[0].name,
+                    uid: user.uid
                 });
                 console.log("Succes")
                 localStorage.setItem("uid", user.uid)
             } catch (err) {
                 console.log(err)
             }
-            sendEmailVerification(auth.currentUser)
-                .then(() => {
-                });
             uploadfile(file.files[0])
             err.style.display = "none";
             btnSign.innerHTML = "Sign Up"
@@ -117,12 +115,11 @@ btnSign.addEventListener("click", async () => {
 
 btnLog.addEventListener("click", () => {
     signInWithEmailAndPassword(auth, emailLog.value, passwordLog.value)
-        .then(async (userCredential) => {
+        .then((userCredential) => {
             const user = userCredential.user;
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     const uid = user.uid;
-                    localStorage.setItem("uid", user.uid)
                     signinContainer.classList.add("notActive")
                     logincontainer.classList.add("notActive")
                     main.classList.remove("notActive")
@@ -139,7 +136,7 @@ btnLog.addEventListener("click", () => {
             //     messageInlog.style.display = "block";
             // }
             emailLog.value = "";
-            passwordLog.value = ""
+            passwordLog.value = "";
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -158,6 +155,7 @@ logOutBtn.addEventListener("click", () => {
         signinContainer.classList.add("notActive");
         logincontainer.classList.remove("notActive")
     }).catch((error) => {
+        console.log(error)
     });
 })
 
@@ -168,7 +166,7 @@ const getData = async (uid) => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            let { fullName, file, email } = docSnap.data();
+            let { fullName, file } = docSnap.data();
             currentUserName = fullName;
             profileName.innerHTML = fullName;
             if (file) {
@@ -190,42 +188,46 @@ const getData = async (uid) => {
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
-        getData(user.uid)
-        getAllUsers(user.email)
+        localStorage.setItem("uid", uid)
+        getData(uid)
         signinContainer.classList.add("notActive")
         logincontainer.classList.add("notActive")
         main.classList.remove("notActive")
+        getAllUsers()
+
+        showNoti(uid)
     } else {
         main.classList.add("notActive")
         signinContainer.classList.add("notActive");
         logincontainer.classList.remove("notActive")
     }
 });
-let userNumbering = [];
-
-const getAllUsers = async (email) => {
+const getAllUsers = async () => {
     try {
         let currentUserId = localStorage.getItem("uid");
-        const q = query(collection(db, "users"), where("uid", "!=", currentUserId), orderBy("uid", "isActive", "desc"));
+        const q = query(collection(db, "users"), where("uid", "!=", currentUserId), orderBy('uid', "isActive", "desc"));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const users = [];
             querySnapshot.forEach((doc) => {
                 users.push(doc.data());
             });
-            userList.innerHTML = ""
+            userList.innerHTML = "";
+            console.log(users)
             howMuchUser.innerHTML = users.length;
             for (let i = 0; i < users.length; i++) {
-                const { fullName, isActive, uid, file, notifications } = users[i]
+                const { fullName, isActive, uid, file, email, notifications } = users[i];
                 userList.innerHTML += `<p class="cursor" onclick="userCatch('${fullName}', '${email}' , '${file}','${uid}')"><img  src="${file ? file : "profilepic.png"}" alt="" width="40px">${fullName}</p>
                 <div>
-                ${notifications ? `<span class="notification-badge position-absolute translate-middle badge rounded-pill bg-primary">
+                <div class="online-dot ${isActive ? "green-dot" : "red-dot"}"></div>
+                ${notifications ? `<span class="notification-badge position-absolute translate-middle badge rounded-pill bg-primary">${notifications}
                 <span class="visually-hidden">unread messages</span>
                 </span>
                 </div>` : ""}
-                <div class="online-dot ${isActive ? "green-dot" : "red-dot"}"></div>
-            `
+                `
+                console.log(true)
+                onlineShow()
             }
-        });
+        })
     } catch (err) {
         console.log("error", err)
     }
@@ -234,7 +236,7 @@ let UserName;
 let selectUserId;
 const userCatch = (name, email, file, selectedId) => {
     UserName = name;
-    selectUserId = selectedId;
+    selectUserId = selectedId
     let currentUserId = localStorage.getItem("uid");
     let chatId;
     if (currentUserId < selectUserId) {
@@ -248,13 +250,14 @@ const userCatch = (name, email, file, selectedId) => {
 }
 window.userCatch = userCatch;
 
-// const showNoti = async()=>{
-//     const userRef = doc(db, "users", selectUserId);
-//             await updateDoc(userRef, {
-//                 notifications: increment(1),
-//             });
-//             console.log(userRef, "userRef")
-// } 
+
+const showNoti = async (uid) => {
+    const userRef = doc(db, "users", uid);
+    await updateDoc(userRef, {
+        notifications: increment(1),
+    });
+    console.log(userRef, "userRef")
+}
 
 const messageProcess = async () => {
     try {
@@ -262,6 +265,8 @@ const messageProcess = async () => {
             const chatBox = document.getElementById("chat-box");
             let currentUserId = localStorage.getItem("uid")
             let chatId;
+            console.log(selectUserId)
+            console.log(currentUserId)
             if (currentUserId < selectUserId) {
                 chatId = currentUserId + selectUserId;
             } else {
@@ -325,13 +330,11 @@ const fetchAllMessages = (chatId) => {
 }
 
 const onlineShow = async (status) => {
-    let currentUserId = localStorage.getItem("uid");
-
-    const userRef = doc(db, "users", currentUserId);
+    let currentUserRes = localStorage.getItem("uid")
+    const userRef = doc(db, "users", currentUserRes);
     await updateDoc(userRef, {
         isActive: status,
     });
-    console.log(userRef, "userRef")
 }
 
 
@@ -340,4 +343,5 @@ window.addEventListener("focus", () => {
 })
 window.addEventListener("beforeunload", () => {
     onlineShow(false)
+    localStorage.removeItem("uid")
 })
